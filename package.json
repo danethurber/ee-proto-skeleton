@@ -4,7 +4,7 @@
   "description": "ERROR: No README.md file found!",
   "main": "app.js",
   "scripts": {
-    "start": "foreman start",
+    "start": "node_modules/supervisor/lib/cli-wrapper.js --extensions 'node|js|coffee' --ignore client/ server/app.coffee",
     "test": "npm test"
   },
   "repository": {
@@ -16,5 +16,8 @@
   "dependencies": {
     "express": "~3.4.7",
     "jade": "~1.1.0"
+  },
+  "devDependencies": {
+    "supervisor": "~0.5.6"
   }
 }
