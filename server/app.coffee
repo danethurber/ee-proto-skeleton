@@ -1,5 +1,7 @@
-express = require 'express'
 path = require 'path'
+
+express = require 'express'
+expressJwt = require 'express-jwt'
 
 routes = require './config/routes'
 
@@ -14,6 +16,14 @@ app.configure ->
   app.use express.logger('dev')
   app.use express.bodyParser()
   app.use express.methodOverride()
+  app.use express.json()
+  app.use express.urlencoded()
+
+  # TODO: put secret in a config file using an ENV var
+  app.use '/api', expressJwt { secret: 'kittens' }
+  app.use (err, req, res, next) ->
+    if err.constructor.name is 'UnauthorizedError'
+      res.send 401, 'Unauthorized'
 
   app.use express.static path.join '..', 'client'
 

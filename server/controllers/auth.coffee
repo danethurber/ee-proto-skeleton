@@ -15,6 +15,7 @@ module.exports =
       username: req?.body?.username
       password: req?.body?.password
 
+    # TODO: put secret in a config file using an ENV var
     if user.username is userFixture.username and user.password is userFixture.password
       token = jwt.sign userFixture, 'kittens', { expiresInMinutes: 300 }
       res.json { token: token }
