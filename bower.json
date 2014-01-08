@@ -1,0 +1,22 @@
+{
+  "name": "ee-proto-skeleton",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "client/components",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/danethurber/ee-proto-skeleton",
+  "authors": [
+    "Dane Thurber <dane.thurber@gmail.com>"
+  ],
+  "description": "ember/express skeleton for rapid prototypes",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.0.3"
+  }
+}

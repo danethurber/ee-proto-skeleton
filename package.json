@@ -1,21 +1,25 @@
 {
   "name": "ee-proto-skeleton",
   "version": "0.0.0",
-  "description": "ERROR: No README.md file found!",
-  "main": "app.js",
+  "description": "ember/express skeleton for rapid prototypes",
+  "readmeFilename": "README.md",
+  "main": "server/app.coffee",
   "scripts": {
     "start": "node_modules/supervisor/lib/cli-wrapper.js --extensions 'node|js|coffee' --ignore client/ server/app.coffee",
-    "test": "npm test"
+    "test": "npm test",
+    "postinstall": "node_modules/bower/bin/bower install -f"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/danethurber/ee-proto-skeleton.git"
   },
-  "author": "",
-  "license": "BSD",
+  "author": "Dane Thurber <dane.thurber@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "express": "~3.4.7",
-    "jade": "~1.1.0"
+    "jade": "~1.1.0",
+    "bower": "~1.2.8",
+    "coffee-script": "~1.6.3"
   },
   "devDependencies": {
     "supervisor": "~0.5.6"
