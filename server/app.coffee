@@ -25,7 +25,7 @@ app.configure ->
     if err.constructor.name is 'UnauthorizedError'
       res.send 401, 'Unauthorized'
 
-  app.use express.static path.join '..', 'client'
+  app.use '/static', require('./middleware/mincer').server
 
   app.use app.router
 
