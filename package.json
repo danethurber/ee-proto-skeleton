@@ -19,7 +19,9 @@
     "express": "~3.4.7",
     "jade": "~1.1.0",
     "bower": "~1.2.8",
-    "coffee-script": "~1.6.3"
+    "coffee-script": "~1.6.3",
+    "express-jwt": "~0.1.0",
+    "jsonwebtoken": "~0.1.0"
   },
   "devDependencies": {
     "supervisor": "~0.5.6"
