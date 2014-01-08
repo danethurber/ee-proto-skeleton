@@ -4,6 +4,7 @@
   "description": "ERROR: No README.md file found!",
   "main": "app.js",
   "scripts": {
+    "start": "foreman start",
     "test": "npm test"
   },
   "repository": {
@@ -11,5 +12,9 @@
     "url": "https://github.com/danethurber/ee-proto-skeleton.git"
   },
   "author": "",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "express": "~3.4.7",
+    "jade": "~1.1.0"
+  }
 }
