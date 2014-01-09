@@ -5,7 +5,7 @@ api = require '../controllers/api'
 module.exports =
   init: (app) ->
 
-    app.post '/auth', auth.auth
+    app.post '/token', auth.token
 
     app.get '/api', api.index
 

@@ -10,7 +10,7 @@ userFixture =
 
 module.exports =
 
-  auth: (req, res) ->
+  token: (req, res) ->
     user =
       username: req?.body?.username
       password: req?.body?.password
@@ -18,6 +18,11 @@ module.exports =
     # TODO: put secret in a config file using an ENV var
     if user.username is userFixture.username and user.password is userFixture.password
       token = jwt.sign userFixture, 'kittens', { expiresInMinutes: 300 }
-      res.json { token: token }
+
+      res.json
+        token_type: 'bearer'
+        access_token: token
+
     else
-      res.send 401, 'Wrong username or Password'
+      res.json 400,
+        error: "invalid_grant"

@@ -1,0 +1,6 @@
+form submit="login"
+  = view Ember.TextField id='identification' valueBinding='identification' placeholder='Enter Login'
+  = view Ember.TextField id='password' type='password' valueBinding='password' placeholder='Enter Password'
+  = input class="btn" type="submit" value="Log In"
+
+linkTo 'index' | Home

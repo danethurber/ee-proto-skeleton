@@ -1,1 +1,2 @@
-p this is the index page
+ul
+  li = linkTo 'test' | Api test page
