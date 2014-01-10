@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "description": "ember/express skeleton for rapid prototypes",
   "readmeFilename": "README.md",
-  "main": "server/app.coffee",
+  "main": "server/startup.js",
   "scripts": {
-    "start": "node_modules/supervisor/lib/cli-wrapper.js --extensions 'node|js|coffee' --ignore client/ server/app.coffee",
     "test": "npm test",
     "postinstall": "node_modules/bower/bin/bower install -f"
   },
@@ -25,9 +24,10 @@
     "stylus": "~0.42.0",
     "nib": "~1.0.2",
     "mincer": "~0.5.12",
-    "mincer-emblem-engine": "~0.1.6"
+    "mincer-emblem-engine": "~0.1.6",
+    "startup": "~0.3.0"
   },
   "devDependencies": {
-    "supervisor": "~0.5.6"
+    "lr": "~0.1.2"
   }
 }

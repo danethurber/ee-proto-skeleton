@@ -1,1 +1,1 @@
-web: coffee server/app.coffee
+web: ./node_modules/.bin/startup start

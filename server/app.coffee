@@ -5,7 +5,7 @@ expressJwt = require 'express-jwt'
 
 routes = require './config/routes'
 
-app = express()
+module.exports = app = express()
 
 app.configure ->
   app.set 'port', process.env.PORT || 3000
@@ -33,6 +33,3 @@ app.configure 'development', ->
   app.use express.errorHandler()
 
 routes.init app
-
-app.listen app.get('port'), ->
-  console.log "Express server listening on port: #{ app.get('port') }"
