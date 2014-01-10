@@ -5,6 +5,8 @@
   "readmeFilename": "README.md",
   "main": "server/startup.js",
   "scripts": {
+    "start": "foreman start",
+    "dev": "foreman start -f Procfile.dev",
     "test": "npm test",
     "postinstall": "node_modules/bower/bin/bower install -f"
   },
