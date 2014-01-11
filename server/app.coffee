@@ -1,8 +1,17 @@
 path = require 'path'
 
 stack = require 'simple-stack-common'
+mongoose = require 'mongoose'
 
 routes = require './config/routes'
+
+dbUrl = process.env.MONGO_URL
+mongoose.connect dbUrl
+
+db = mongoose.connection
+db.once 'open', () -> console.log "Connected To Database: #{dbUrl}"
+db.on 'error', () -> throw new Error "Unable to Connect To Database: #{dbUrl}"
+
 
 module.exports = app = stack()
 
