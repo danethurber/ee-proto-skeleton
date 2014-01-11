@@ -1,7 +1,6 @@
 jwt = require 'jsonwebtoken'
 
 # TODO: put secret in a config file using an ENV var
-# TODO: return 401 on unauthorized requests instead of just logging errors
 # TODO: test and cleanup
 module.exports = (req, res, next) ->
   secret = 'kittens'
@@ -14,16 +13,16 @@ module.exports = (req, res, next) ->
       token = parts[1]
 
       if not /^Bearer$/i.test token_type
-        console.error 'bad token format'
+        return res.send 401, 'bad token format'
     else
-      console.error 'bad token format'
+      return res.send 401, 'bad token format'
 
   else
-    console.error 'token required'
+    return res.send 401, 'token required'
 
   jwt.verify token, secret, {}, (err, decoded) ->
     if err
-      console.error 'invalid token'
+      return res.send 401, 'invalid token'
 
     req.user = decoded
 
