@@ -26,7 +26,8 @@
     "stylus": "~0.42.0",
     "nib": "~1.0.2",
     "mincer": "~0.5.12",
-    "mincer-emblem-engine": "~0.1.6"
+    "mincer-emblem-engine": "~0.1.6",
+    "mongoose": "~3.8.4"
   },
   "devDependencies": {
     "lr": "~0.1.2"
