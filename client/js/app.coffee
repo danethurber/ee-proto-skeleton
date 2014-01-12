@@ -52,11 +52,6 @@ DS.RESTAdapter.reopen
 
     s = @._super.apply @, arguments
 
-App.ApplicationSerializer = DS.RESTSerializer.extend
-  normalize: (type, hash, prop) ->
-    console.log 'app serializer'
-    @._super type, hash, prop
-
 App.Router.map () ->
   @route 'login'
   @route 'test'
