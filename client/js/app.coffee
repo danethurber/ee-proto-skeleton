@@ -9,48 +9,42 @@
 #= require_self
 #= require_tree ./../templates
 
+DS.HyperAdapter = DS.RESTAdapter.extend
+  find: (store, type, id) ->
+    if @isHyperModel type
+      path = @buildHyperPath type
+      @follow path
+    else
+      @._super.apply @, arguments
+
+  follow: (path, data={}) ->
+    next = path.shift()
+    url = if data[next]? then data[next].href else next
+
+    @ajax(url, 'GET').then (res) =>
+      if Ember.isEmpty(path) then res else @follow(path, res)
+
+  isHyperModel: (type) ->
+    type.isClass and type.hyper
+
+  buildHyperPath: (type) ->
+    throw new Error 'hyperPath must be set' if not type.hyperPath
+
+    path = type.hyperPath.split '.'
+    path.unshift @urlPrefix()
+    path
+
 Ember.Application.initializer
   name: 'authentication'
   initialize: (container, application) ->
     Ember.SimpleAuth.setup container, application
 
-App = Ember.Application.create()
 
-DS.RESTAdapter.reopen
+App = Ember.Application.create
+  ApplicationAdapter: DS.HyperAdapter
+
+DS.HyperAdapter.reopen
   namespace: 'api'
-
-  follow: (path, data={}) ->
-    return if Ember.isEmpty path
-
-    next = path.shift()
-    url = if data[next]? then data[next].href else next
-
-    Ember.$.get(url).then (res) =>
-      if Ember.isEmpty path
-        res
-      else
-        @follow path, res
-
-  buildURL: (type, id) ->
-    klass = App[type.classify()]
-
-    if klass.isClass and klass.hyper
-      throw new Error 'hyperPath must be set' if not klass.hyperPath
-
-      path = klass.hyperPath.split '.'
-      path.unshift @urlPrefix()
-
-      req = @follow(path)
-        .then (data) ->
-          href = data.href
-          console.log "href: #{href}"
-
-        # TODO: this function needs to return the resource url
-        #       how do i do that???
-    else
-      s = @._super.apply @, arguments
-
-    s = @._super.apply @, arguments
 
 App.Router.map () ->
   @route 'login'
@@ -73,7 +67,7 @@ App.ApplicationRoute = Ember.Route.extend Ember.SimpleAuth.ApplicationRouteMixin
 
 App.TestRoute = Ember.Route.extend Ember.SimpleAuth.AuthenticatedRouteMixin,
   model: () ->
-    @store.find 'user', 1
+    req = @store.find('user', 1)
 
 # CONTROLLERS
 App.LoginController = Ember.Controller.extend Ember.SimpleAuth.LoginControllerMixin
