@@ -1,6 +1,7 @@
 path = require 'path'
 fs = require 'fs'
 
+config = require 'config'
 express = require 'express'
 mongoose = require 'mongoose'
 
@@ -28,9 +29,9 @@ recursiveLoadModels path.join(__dirname, 'models')
 module.exports = app = express()
 
 app.configure ->
-  app.set 'port', process.env.PORT || 3000
+  app.set 'port', config.ports.server
   app.set 'view engine', 'jade'
-  app.set 'views',  path.join __dirname, 'views'
+  app.set 'views',  config.paths.views
 
   app.use express.logger()
   app.use express.bodyParser()

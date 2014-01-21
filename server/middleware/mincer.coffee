@@ -1,3 +1,5 @@
+config = require 'config'
+
 Mincer = require 'mincer'
 emblemEngine = require 'mincer-emblem-engine'
 nib = require 'nib'
@@ -7,7 +9,7 @@ Mincer.StylusEngine.configure (style) ->
 
 environment = new Mincer.Environment()
 emblemEngine.register environment
-environment.appendPath "#{__dirname}/../../client"
+environment.appendPath config.paths.assets
 
 Mincer.logger.use
   log: (level, msg) ->
