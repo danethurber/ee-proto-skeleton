@@ -1,4 +1,5 @@
 path = require 'path'
+fs = require 'fs'
 
 express = require 'express'
 mongoose = require 'mongoose'
@@ -12,6 +13,17 @@ db = mongoose.connection
 db.once 'open', () -> console.log "Connected To Database: #{dbUrl}"
 db.on 'error', () -> throw new Error "Unable to Connect To Database: #{dbUrl}"
 
+recursiveLoadModels = (path) ->
+  fs.readdirSync(path).forEach (file) ->
+    newPath = path + '/' + file
+    stat = fs.statSync newPath
+
+    if stat.isFile()
+      require(newPath) if /(.*)\.(js$|coffee$)/.test(file)
+    else if stat.isDirectory()
+      arguments.callee newPath
+
+recursiveLoadModels path.join(__dirname, 'models')
 
 module.exports = app = express()
 
