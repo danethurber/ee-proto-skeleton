@@ -13,8 +13,9 @@ module.exports =
       passport.authenticate('local', session: false),
       token.create
 
-
-    # app.get '/api', api.index
+    app.get '/api',
+      passport.authenticate('bearer', session: false),
+      api.index
 
     # app.get '/api/users', user.index
     # app.post '/api/users', user.create

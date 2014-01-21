@@ -8,6 +8,7 @@ jwt = require 'jwt-simple'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
+BearerStrategy = require('passport-http-bearer').Strategy
 Token = require './token'
 
 UserSchema = new Schema
@@ -52,5 +53,12 @@ UserSchema.statics.createToken = (email) ->
         deferred.resolve user.token.token
 
   deferred.promise
+
+UserSchema.statics.createBearerStrategy = () ->
+  new BearerStrategy (token, done) =>
+    @findOne @decode(token), (err, user=false) ->
+      done(err) if err
+
+      done null, user
 
 module.exports = mongoose.model 'User', UserSchema

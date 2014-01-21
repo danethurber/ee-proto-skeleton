@@ -6,6 +6,7 @@ express = require 'express'
 mongoose = require 'mongoose'
 passport = require 'passport'
 
+User = require './models/user'
 routes = require './config/routes'
 
 dbUrl = process.env.MONGO_URL
@@ -51,6 +52,7 @@ app.configure 'development', () ->
 app.configure 'production', () ->
   app.use express.errorHandler()
 
-passport.use require('./models/user').createStrategy()
+passport.use User.createStrategy()
+passport.use User.createBearerStrategy()
 
 routes.init app
