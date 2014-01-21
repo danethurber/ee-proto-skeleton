@@ -2,22 +2,25 @@ User = require '../models/user'
 
 module.exports =
 
-  index: (req, res) ->
-    User.find (err, users) ->
-      res.json users
-
   create: (req, res) ->
-    user = new User req.body.user
+    temp = new User
+      first_name: req.body.first_name
+      last_name: req.body.last_name
+      email: req.body.email
 
-    user.save (err) ->
-      if not err
-        res.send '201', user
+    User.register temp, req.body.password, (err, user) ->
+      if err
+        res.json 400
       else
-        res.send '403'
+        res.json 200, user: user
 
-  show: (req, res) ->
-    User.findById req.params.id, (err, user) ->
-      if not err
-        res.send user
-      else
-        res.send '404', user
+  # index: (req, res) ->
+  #   User.find (err, users) ->
+  #     res.json users
+
+  # show: (req, res) ->
+  #   User.findById req.params.id, (err, user) ->
+  #     if not err
+  #       res.send user
+  #     else
+  #       res.send '404', user

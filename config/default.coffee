@@ -16,3 +16,8 @@ module.exports =
     root: rootDir
     views: path.join serverDir, 'views'
     assets: clientDir
+
+  token:
+    ttl: 3600000
+    expiresInMinutes: 20
+    secret: process.env.TOKEN_SECRET or 'super cats'

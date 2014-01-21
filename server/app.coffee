@@ -4,6 +4,7 @@ fs = require 'fs'
 config = require 'config'
 express = require 'express'
 mongoose = require 'mongoose'
+passport = require 'passport'
 
 routes = require './config/routes'
 
@@ -36,6 +37,7 @@ app.configure ->
   app.use express.logger()
   app.use express.bodyParser()
   app.use express.methodOverride()
+  app.use passport.initialize()
 
   app.use '/static', require('./middleware/mincer').server
 
@@ -48,5 +50,7 @@ app.configure 'development', () ->
 
 app.configure 'production', () ->
   app.use express.errorHandler()
+
+passport.use require('./models/user').createStrategy()
 
 routes.init app
