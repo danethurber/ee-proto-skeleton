@@ -28,7 +28,14 @@
     "mincer": "~0.5.12",
     "mincer-emblem-engine": "~0.1.6",
     "mongoose": "~3.8.4",
-    "superagent": "~0.16.0"
+    "superagent": "~0.16.0",
+    "express": "~3.4.8",
+    "passport": "~0.1.18",
+    "passport-local": "~0.1.6",
+    "passport-local-mongoose": "~0.2.5",
+    "jwt-simple": "~0.1.0",
+    "lodash": "~2.4.1",
+    "underscore": "~1.5.2"
   },
   "devDependencies": {
     "lr": "~0.1.2"

@@ -7,17 +7,19 @@ module.exports =
       res.json users
 
   create: (req, res) ->
-    user = new User req.body.user
+    if not req?.body?
+      res.send 400, error: "registration error"
 
-    user.save (err) ->
-      if not err
+    data =
+      email: req.body?.email
+      first_name: req.body?.first_name
+      last_name: req.body?.last_name
+
+    User.register data, req.body.password, (err, user) ->
+      if err
+        console.log 'registration error'
+        console.log err
+
+        res.send 400, errors: err.message
+      else
         res.send '201', user
-      else
-        res.send '403'
-
-  show: (req, res) ->
-    User.findById req.params.id, (err, user) ->
-      if not err
-        res.send user
-      else
-        res.send '404', user

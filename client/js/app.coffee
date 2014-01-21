@@ -53,6 +53,7 @@ DS.HyperAdapter.reopen
 
 App.Router.map () ->
   @route 'login'
+  @route 'register'
   @route 'test'
 
 # MODELS
@@ -76,3 +77,13 @@ App.TestRoute = Ember.Route.extend Ember.SimpleAuth.AuthenticatedRouteMixin,
 
 # CONTROLLERS
 App.LoginController = Ember.Controller.extend Ember.SimpleAuth.LoginControllerMixin
+
+App.RegisterController = Ember.Controller.extend
+  actions:
+    register: () ->
+      req = Ember.$.post '/register', _(@).pick 'first_name', 'last_name', 'email', 'password'
+      req.then () ->
+        console.log arguments
+      req.fail () ->
+        console.log 'fail'
+        console.log arguments

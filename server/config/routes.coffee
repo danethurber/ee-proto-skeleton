@@ -1,16 +1,18 @@
 superagent = require 'superagent'
+passport = require 'passport'
+
+auth = require '../middleware/auth'
 
 home = require '../controllers/home'
-auth = require '../controllers/auth'
+session = require '../controllers/session'
+token = require '../controllers/token'
 user = require '../controllers/user'
 
 module.exports =
   init: (app) ->
-    app.post '/token', auth.token
-
 
     # mock hypermedia responses
-    app.get '/api', (req, res) ->
+    app.get '/api', auth.ensureAuthenticated(), (req, res) ->
       res.json
         href: 'http://localhost:5000/api'
         users:
@@ -18,7 +20,7 @@ module.exports =
         account:
           href: 'http://localhost:5000/api/users/1'
 
-    app.get '/api/users', (req, res) ->
+    app.get '/api/users', auth.ensureAuthenticated(), (req, res) ->
       res.json
         href: 'http://localhost:5000/api/users'
         root:
@@ -27,7 +29,7 @@ module.exports =
           ref: 'http://localhost:5000/api/users/1'
         }]
 
-    app.get '/api/users/:id', (req, res) ->
+    app.get '/api/users/:id', auth.ensureAuthenticated(), (req, res) ->
       superagent.get 'http://api.randomuser.me/0.2/', (data) ->
         user = data.body.results[0].user
         res.json
@@ -41,8 +43,10 @@ module.exports =
           avatar:
             src: user.picture
 
-    # app.get '/api/users', user.index
-    # app.post '/api/users', user.create
-    # app.get '/api/users/:id', user.show
+    app.post '/register', user.create
+
+    app.post '/token', passport.authenticate('local', session: false), token.create
+    app.post '/login', session.create
+    app.post '/logout', session.destroy
 
     app.get '/', home.index

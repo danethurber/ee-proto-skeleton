@@ -1,0 +1,12 @@
+form submit="register"
+  h1 Sign Up
+
+  = view Ember.TextField id='first_name' valueBinding='first_name' placeholder='First name'
+  = view Ember.TextField id='last_name' valueBinding='last_name' placeholder='Last name'
+  = view Ember.TextField id='email' type='email' valueBinding='email' placeholder='Email'
+  = view Ember.TextField id='password' type='password' valueBinding='password' placeholder='Enter Password'
+
+  = input class="btn" type="submit" value="Sign Me Up!"
+
+linkTo 'index' | Home
+linkTo 'login' | Login

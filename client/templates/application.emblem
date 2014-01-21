@@ -1,6 +1,9 @@
 if session.isAuthenticated
+
   a href="#" click="logout" Logout
 else
-  a href="#" click="login" Login
+  ul
+    li = linkTo 'login' | Login
+    li = linkTo 'register' | Register
 
 == outlet
