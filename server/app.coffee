@@ -1,6 +1,6 @@
 path = require 'path'
 
-stack = require 'simple-stack-common'
+express = require 'express'
 mongoose = require 'mongoose'
 
 routes = require './config/routes'
@@ -13,14 +13,27 @@ db.once 'open', () -> console.log "Connected To Database: #{dbUrl}"
 db.on 'error', () -> throw new Error "Unable to Connect To Database: #{dbUrl}"
 
 
-module.exports = app = stack()
+module.exports = app = express()
 
 app.configure ->
   app.set 'port', process.env.PORT || 3000
   app.set 'view engine', 'jade'
   app.set 'views',  path.join __dirname, 'views'
 
-  app.useBefore 'router', '/api', 'jwt-verify', require('./middleware/jwt-verify')
-  app.useBefore 'router', '/static', 'mincer', require('./middleware/mincer').server
+  app.use express.logger()
+  app.use express.bodyParser()
+  app.use express.methodOverride()
+
+  app.use '/static', require('./middleware/mincer').server
+
+  app.use app.router
+
+app.configure 'development', () ->
+  app.use express.errorHandler
+    dumpExceptions: true
+    showStack: true
+
+app.configure 'production', () ->
+  app.use express.errorHandler()
 
 routes.init app
