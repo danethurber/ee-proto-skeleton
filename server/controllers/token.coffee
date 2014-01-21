@@ -3,7 +3,6 @@ User = require '../models/user'
 module.exports =
 
   create: (req, res) ->
-    console.log req.user
     if req.user
       User.createToken(req.user.email)
         .then (token) ->
