@@ -23,6 +23,6 @@
     "ember-data": "~1.0.0-beta.4",
     "underscore": "~1.5.2",
     "normalize-stylus": "*",
-    "ember-simple-auth": "~0.0.11"
+    "ember-simple-auth": "git@github.com:danethurber/ember-simple-auth-component.git"
   }
 }
